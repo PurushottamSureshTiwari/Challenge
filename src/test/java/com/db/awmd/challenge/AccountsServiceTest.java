@@ -62,7 +62,7 @@ public class AccountsServiceTest {
     BalanceTransfer balanceTransfer = new BalanceTransfer("", "Id-456", new BigDecimal(1000));
     try {
       accountsService.transferAmount(balanceTransfer);
-    }catch (AccountNotExistException e){
+    }catch (Exception e){
       assertThat(e.getMessage()).isEqualTo("From Account doesn't exist");
     }
   }
@@ -72,7 +72,7 @@ public class AccountsServiceTest {
     BalanceTransfer balanceTransfer = new BalanceTransfer("Id-1234", "", new BigDecimal(1000));
     try {
       accountsService.transferAmount(balanceTransfer);
-    }catch (AccountNotExistException e){
+    }catch (Exception e){
       assertThat(e.getMessage()).isEqualTo("To Account doesn't exist");
     }
   }
@@ -87,7 +87,7 @@ public class AccountsServiceTest {
     BalanceTransfer balanceTransfer = new BalanceTransfer("Id-1234", "Id-456", new BigDecimal(200));
     try {
       accountsService.transferAmount(balanceTransfer);
-    }catch (NegativeBalanceException e){
+    }catch (Exception e){
       assertThat(e.getMessage()).isEqualTo("Can't do amount transfer with negative balance");
     }
   }

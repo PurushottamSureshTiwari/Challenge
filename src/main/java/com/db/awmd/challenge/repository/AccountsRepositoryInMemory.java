@@ -8,6 +8,8 @@ import com.db.awmd.challenge.exception.DuplicateAccountIdException;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 import com.db.awmd.challenge.exception.NegativeBalanceException;
 import org.springframework.stereotype.Repository;
@@ -38,24 +40,25 @@ public class AccountsRepositoryInMemory implements AccountsRepository {
 
   @Override
   public void transferAmount(BalanceTransfer balanceTransfer) throws NegativeBalanceException, AccountNotExistException {
-     String accountFromId = balanceTransfer.getAccountFromId();
-     String accountToId = balanceTransfer.getAccountToId();
 
-     if(accountFromId.equalsIgnoreCase(accountToId))throw new DuplicateAccountIdException("Both Account are same");
+          String accountFromId = balanceTransfer.getAccountFromId();
+          String accountToId = balanceTransfer.getAccountToId();
 
-     BigDecimal amount = balanceTransfer.getAmount();
+          if(accountFromId.equalsIgnoreCase(accountToId))throw new DuplicateAccountIdException("Both Account are same");
+
+          BigDecimal amount = balanceTransfer.getAmount();
 
 
-     if(!accounts.containsKey(accountFromId)) throw new AccountNotExistException("From Account doesn't exist");
-     if(!accounts.containsKey(accountToId)) throw new AccountNotExistException("To Account doesn't exist");
+          if(!accounts.containsKey(accountFromId)) throw new AccountNotExistException("From Account doesn't exist");
+          if(!accounts.containsKey(accountToId)) throw new AccountNotExistException("To Account doesn't exist");
 
-     Account fromAccount = accounts.get(accountFromId);
-     Account toAccount = accounts.get(accountToId);
+          Account fromAccount = accounts.get(accountFromId);
+          Account toAccount = accounts.get(accountToId);
 
-     if(fromAccount.getBalance().compareTo(amount) == -1 )throw new NegativeBalanceException("Can't do amount transfer with negative balance");
+          if(fromAccount.getBalance().compareTo(amount) == -1 )throw new NegativeBalanceException("Can't do amount transfer with negative balance");
 
-     fromAccount.setBalance(fromAccount.getBalance().subtract(amount));
-     toAccount.setBalance(toAccount.getBalance().add(amount));
-  }
 
+          fromAccount.setBalance(fromAccount.getBalance().subtract(amount));
+          toAccount.setBalance(toAccount.getBalance().add(amount));
+      }
 }

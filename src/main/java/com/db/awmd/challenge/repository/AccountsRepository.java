@@ -14,5 +14,5 @@ public interface AccountsRepository {
 
   void clearAccounts();
 
-  void transferAmount(BalanceTransfer balanceTransfer)throws NegativeBalanceException, AccountNotExistException;
+  void transferAmount(BalanceTransfer balanceTransfer) throws NegativeBalanceException, AccountNotExistException, InterruptedException;
 }
