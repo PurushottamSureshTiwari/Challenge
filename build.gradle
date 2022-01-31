@@ -1,0 +1,27 @@
+plugins {
+  id 'org.springframework.boot' version '2.6.3'
+  id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+  id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.jetbrains:annotations:20.1.0'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  compileOnly("org.projectlombok:lombok")
+  implementation group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
+  implementation group: 'org.hibernate', name: 'hibernate-validator', version: '7.0.2.Final'
+  testCompileOnly 'junit:junit:4.12'
+  annotationProcessor("org.projectlombok:lombok")
+  testImplementation('junit:junit:4.12')
+}
+
+
